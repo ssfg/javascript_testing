@@ -1,3 +1,4 @@
+
 "use strict";
 
 /*\
@@ -172,18 +173,67 @@ function strToUTF8Arr (sDOMStr) {
 }
 
 
-/* Tests */
+var fs = require('fs');
+// Read the contents of the file into memory.
+
+// Read the string data.
+fs.readFile("./base64_data/mnist_ys.txt", function (err, logData) {
+// If an error occurred, throwing it will
+// display the exception and kill our app.
+if (err) throw err;
+// logData is a Buffer, convert to string.
+
+// this is the one that actually returns something sensible (original data even)
+// var data = new Float32Array( base64DecToArr(input_string).buffer );
+
+
+var input_string = logData.toString();
+// var input_len = input_string.length
+console.log("string length: " + input_string.length);
+
+var t1 = base64DecToArr(input_string);
+console.log("t1: " + t1[3]);
+console.log("after bToAr: " + t1.length);
+
+var F1 = new Float32Array (t1.buffer);
+console.log("F1: " + F1[4]);
+console.log("after F32: " + F1.length);
+
+/*
+
+// Mozilla Example
 
 var sMyInput = "Base 64 \u2014 Mozilla Developer Network";
 
 var aMyUTF8Input = strToUTF8Arr(sMyInput);
+console.log(aMyUTF8Input[3]);
 
 var sMyBase64 = base64EncArr(aMyUTF8Input);
-
 console.log(sMyBase64);
 
 var aMyUTF8Output = base64DecToArr(sMyBase64);
+console.log(aMyUTF8Output[3]);
 
 var sMyOutput = UTF8ArrToStr(aMyUTF8Output);
-
 console.log(sMyOutput);
+
+// Testing / Messing
+
+var Output = base64DecToArr(input_string);
+console.log(Output[3]);
+console.log("length Out:");
+
+var Input = base64EncArr(Output);
+console.log(Input);
+
+var meta_input = strToUTF8Arr(Input);
+console.log(meta_input);
+console.log("what the fuck!");
+
+var string = UTF8ArrToStr(Output);
+console.log(string);
+
+*/
+
+});
+

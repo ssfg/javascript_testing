@@ -67,9 +67,52 @@
 
   }
 
+  convertBinarytoArray = function(filename, callback) {
+
+      // Load the fs (filesystem) module.
+      var fs = require('fs');
+      // Read the contents of the file into memory.
+
+      // Read the string data.
+      fs.readFile(filename, function (err, logData) {
+      // If an error occurred, throwing it will
+      // display the exception and kill our app.
+      if (err) throw err;
+      // logData is a Buffer, convert to string.
+      var input_string = logData.toString();
+      var input_len = input_string.length
+
+      // encode
+      // var b = new Buffer('JavaScript');
+      // var s = b.toString('base64');
+
+      // decode
+      // var b = new Buffer(input_string, 'base64')
+      // var s = b.toString();
+
+      // 
+      var test = base64DecToArr(input_string);
+
+      console.log("test 2: ");
+      console.log(test[3]);
+      console.log("test ---");
+
+      console.log(new Buffer("Hello World").toString('base64'));
+      // SGVsbG8gV29ybGQ=
+      // console.log(new Buffer(input_string, 'base64').toString('ascii'))
+      // Hello World
+
+      callback("hi");
+
+    });
+
+  }
+
+
 module.exports = {
   b64ToUint6: b64ToUint6,
   base64DecToArr: base64DecToArr,
-  convertData: convertData
+  convertData: convertData,
+  convertBinarytoArray: convertBinarytoArray
 };
 
