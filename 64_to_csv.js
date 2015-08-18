@@ -99,6 +99,52 @@ function saveCoords(data) {
 }
 
 
+function saveArray(array) {
+
+  for (var i=0; i < (array.length); i++) {
+    saveCoordsNamed(array[i], i.toString());
+  }
+
+}
+
+
+function saveCoordsNamed(data, name) {
+
+  var fs = require('fs');
+  var filename = name + ".csv"
+  var log = fs.createWriteStream(filename, {'flags': 'a'});
+  // use {'flags': 'a'} to append and {'flags': 'w'} to erase and write a new file
+
+  var len = data.length;
+  var count = 0;
+  var last_output = 0;
+  var matrix_dim = 2;
+
+  for (var i=0; i < (len); i++) {
+    if (count == matrix_dim) {
+      log.write("\n");
+      change = i - last_output;
+      console.log("itteration: " + i + ", last dim:" + change + "count:" + count);
+      last_output = i;
+      count = 0;
+    }
+    try{
+      j = i.toString();
+      log.write(data[i] + ",");
+    }
+    catch(err) {
+        return console.log(err);
+    }
+    count++;
+  }
+
+  console.log(len)
+
+}
+
+saveArray(mnist_reps);
+
+
 // var read_from = "./base64_data/mnist_ys.txt";
 var read_from = "./save_b64.txt"
 
